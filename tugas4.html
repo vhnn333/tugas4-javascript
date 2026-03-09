@@ -1,28 +1,240 @@
-<h3>Input Data</h3>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tugas 4 JavaScript</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#f3f3f3;
+padding:40px;
+}
+
+.container{
+max-width:750px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:15px;
+box-shadow:0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* HEADER */
+
+.header{
+display:flex;
+align-items:center;
+background:linear-gradient(90deg,#ff7eb3,#ff4fa3);
+padding:20px;
+border-radius:15px;
+color:white;
+margin-bottom:30px;
+}
+
+.header img{
+width:80px;
+height:80px;
+border-radius:50%;
+border:4px solid white;
+margin-right:20px;
+}
+
+.header h2{
+margin:0;
+}
+
+.header p{
+margin:3px 0;
+}
+
+/* FORM */
+
+input{
+padding:7px;
+margin:5px 0;
+width:60%;
+}
+
+button{
+background:#ff4fa3;
+color:white;
+border:none;
+padding:8px 16px;
+border-radius:6px;
+cursor:pointer;
+margin-top:10px;
+}
+
+button:hover{
+background:#e63e90;
+}
+
+.section{
+margin-top:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
 <div class="header">
-<img src="foto.jpeg">
+<img src="foto.jpg">
+<div>
 <h2>Advhenita Destriana</h2>
 <p>NIM : 245314012</p>
 </div>
+</div>
 
-.header{
-background:linear-gradient(90deg,#ff7eb3,#ff4fa3);
-color:white;
-padding:20px;
-border-radius:15px;
-}
+<h3>Input Data</h3>
 
-Nama :
+Nama : <br>
 <input type="text" id="nama">
 
-Jumlah Pilihan :
-<input type="number" id="jumlah">
+<br><br>
 
-for(let i=1;i<=jumlah;i++){
-html+=`
-Pilihan ${i} :
-<input type="text" id="pil${i}">
-`
+Jumlah Pilihan : <br>
+<input type="number" id="jumlah" min="1" max="10">
+
+<br>
+
+<button onclick="buatInput()">OK</button>
+
+<div class="section" id="inputPilihan"></div>
+<div class="section" id="radioArea"></div>
+<div class="section" id="emailArea"></div>
+<div class="section" id="hasil"></div>
+
+</div>
+
+<script>
+
+let pilihanArray = [];
+
+function buatInput(){
+
+let nama = document.getElementById("nama").value;
+let jumlah = document.getElementById("jumlah").value;
+
+if(nama==""){
+alert("Nama harus diisi");
+return;
 }
 
-let pattern=/^[^ ]+@[^ ]+\.[a-z]{2,3}$/
+if(jumlah=="" || jumlah<=0){
+alert("Jumlah pilihan harus diisi");
+return;
+}
+
+let html = "";
+
+for(let i=1;i<=jumlah;i++){
+
+html += `
+Pilihan ${i} :
+<input type="text" id="pil${i}">
+<br>
+`;
+
+}
+
+html += `<button onclick="buatRadio()">OK</button>`;
+
+document.getElementById("inputPilihan").innerHTML = html;
+
+}
+
+
+function buatRadio(){
+
+pilihanArray = [];
+
+let jumlah = document.getElementById("jumlah").value;
+
+for(let i=1;i<=jumlah;i++){
+
+let teks = document.getElementById("pil"+i).value;
+
+if(teks==""){
+alert("Semua pilihan harus diisi");
+return;
+}
+
+pilihanArray.push(teks);
+
+}
+
+let tampil = "<h3>Pilih Salah Satu</h3>";
+
+for(let i=0;i<pilihanArray.length;i++){
+
+tampil += `
+<input type="radio" name="pilihan" value="${pilihanArray[i]}">
+${pilihanArray[i]}
+<br>
+`;
+
+}
+
+tampil += `<button onclick="inputEmail()">OK</button>`;
+
+document.getElementById("radioArea").innerHTML = tampil;
+
+}
+
+
+function inputEmail(){
+
+let pilih = document.querySelector('input[name="pilihan"]:checked');
+
+if(!pilih){
+alert("Pilih salah satu pilihan");
+return;
+}
+
+let html = `
+Email :
+<br>
+<input type="text" id="emailInput" placeholder="email@domain.com">
+<br>
+<button onclick="tampilkanHasil()">OK</button>
+`;
+
+document.getElementById("emailArea").innerHTML = html;
+
+}
+
+
+function tampilkanHasil(){
+
+let nama = document.getElementById("nama").value;
+let email = document.getElementById("emailInput").value;
+let jumlah = document.getElementById("jumlah").value;
+let pilihan = document.querySelector('input[name="pilihan"]:checked').value;
+
+let pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+if(!pattern.test(email)){
+alert("Format email salah");
+return;
+}
+
+document.getElementById("hasil").innerHTML = `
+<h3>Output</h3>
+
+Hallo, nama saya <b>${nama}</b>, email saya <b>${email}</b>.
+Saya mempunyai sejumlah <b>${jumlah}</b> pilihan yaitu 
+<b>${pilihanArray.join(", ")}</b>
+dan saya memilih <b>${pilihan}</b>.
+`;
+
+}
+
+</script>
+
+</body>
+</html>
