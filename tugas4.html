@@ -74,6 +74,14 @@ background:#e63e90;
 margin-top:20px;
 }
 
+label{
+display:flex;
+align-items:center;
+gap:8px;
+margin:6px 0;
+cursor:pointer;
+}
+
 </style>
 
 </head>
@@ -83,7 +91,7 @@ margin-top:20px;
 <div class="container">
 
 <div class="header">
-<img src="foto.jpg">
+<img src="foto.jpeg">
 <div>
 <h2>Advhenita Destriana</h2>
 <p>NIM : 245314012</p>
@@ -173,9 +181,10 @@ let tampil = "<h3>Pilih Salah Satu</h3>";
 for(let i=0;i<pilihanArray.length;i++){
 
 tampil += `
+<label>
 <input type="radio" name="pilihan" value="${pilihanArray[i]}">
 ${pilihanArray[i]}
-<br>
+</label>
 `;
 
 }
@@ -224,12 +233,14 @@ return;
 }
 
 document.getElementById("hasil").innerHTML = `
+
 <h3>Output</h3>
 
 Hallo, nama saya <b>${nama}</b>, email saya <b>${email}</b>.
 Saya mempunyai sejumlah <b>${jumlah}</b> pilihan yaitu 
 <b>${pilihanArray.join(", ")}</b>
 dan saya memilih <b>${pilihan}</b>.
+
 `;
 
 }
