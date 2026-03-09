@@ -17,3 +17,10 @@ Nama :
 
 Jumlah Pilihan :
 <input type="number" id="jumlah">
+
+for(let i=1;i<=jumlah;i++){
+html+=`
+Pilihan ${i} :
+<input type="text" id="pil${i}">
+`
+}
